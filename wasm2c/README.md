@@ -152,12 +152,6 @@ The generated header file looks something like this:
 #include "wasm-rt.h"
 
 ...
-#ifndef WASM_RT_CORE_TYPES_DEFINED
-#define WASM_RT_CORE_TYPES_DEFINED
-
-...
-
-#endif
 
 #ifdef __cplusplus
 extern "C" {
@@ -183,9 +177,7 @@ u32 w2c_fac_fac(w2c_fac*, u32);
 ```
 
 Let's look at each section. The outer `#ifndef` is standard C
-boilerplate for a header. This `WASM_RT_CORE_TYPES_DEFINED` section
-contains a number of definitions required for all WebAssembly
-modules. The `extern "C"` part makes sure to not mangle the symbols if
+boilerplate for a header. The `extern "C"` part makes sure to not mangle the symbols if
 using this header in C++.
 
 The included `wasm-rt.h` file also includes a number of relevant definitions.
