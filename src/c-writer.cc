@@ -1142,11 +1142,11 @@ void CWriter::Write(const StackVar& sv) {
 const char* CWriter::GetCTypeName(const Type& type) {
   // clang-format off
   switch (type) {
-  case Type::I32: return "u32";
-  case Type::I64: return "u64";
-  case Type::F32: return "f32";
-  case Type::F64: return "f64";
-  case Type::V128: return "v128";
+  case Type::I32: return "uint32_t";
+  case Type::I64: return "uint64_t";
+  case Type::F32: return "float";
+  case Type::F64: return "double";
+  case Type::V128: return "simde_v128_t";
   case Type::FuncRef: return "wasm_rt_funcref_t";
   case Type::ExternRef: return "wasm_rt_externref_t";
     default:
@@ -2494,15 +2494,15 @@ void CWriter::WriteImportProperties(CWriterPhase kind) {
       const uint64_t default_max = limits->is_64
                                        ? (static_cast<uint64_t>(1) << 48)
                                        : (static_cast<uint64_t>(1) << 16);
-      write_import_prop(import, "min", "u64", limits->initial);
-      write_import_prop(import, "max", "u64",
+      write_import_prop(import, "min", "uint64_t", limits->initial);
+      write_import_prop(import, "max", "uint64_t",
                         limits->has_max ? limits->max : default_max);
-      write_import_prop(import, "is64", "u8", limits->is_64);
+      write_import_prop(import, "is64", "uint8_t", limits->is_64);
     } else if (import->kind() == ExternalKind::Table) {
       const Limits* limits = &(cast<TableImport>(import)->table.elem_limits);
       const uint64_t default_max = std::numeric_limits<uint32_t>::max();
-      write_import_prop(import, "min", "u32", limits->initial);
-      write_import_prop(import, "max", "u32",
+      write_import_prop(import, "min", "uint32_t", limits->initial);
+      write_import_prop(import, "max", "uint32_t",
                         limits->has_max ? limits->max : default_max);
     } else {
       continue;
